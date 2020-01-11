@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { DrumPad } from "./styled";
 
 const drumLetters = ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"];
@@ -27,7 +27,7 @@ const drumPadColors = [
   "#BAE66C"
 ];
 
-const renderDrumRow = (_, rowIndex, clickDrumPad, drumColorRefs) => {
+const renderDrumRow = (_, rowIndex, clickDrumPad) => {
   let count = 0;
   if (rowIndex === 1) {
     count = 3;
@@ -35,7 +35,7 @@ const renderDrumRow = (_, rowIndex, clickDrumPad, drumColorRefs) => {
   if (rowIndex === 2) {
     count = 6;
   }
-  console.log("38", drumColorRefs);
+
   return (
     <div
       key={rowIndex}
@@ -50,7 +50,6 @@ const renderDrumRow = (_, rowIndex, clickDrumPad, drumColorRefs) => {
           return (
             <div key={drumLettersIndex}>
               <DrumPad
-                ref={drumColorRefs[drumLettersIndex]}
                 className="drum-pad"
                 clickColor={drumPadColors[drumLettersIndex]}
                 onClick={clickOnDrumPad}
@@ -65,73 +64,73 @@ const renderDrumRow = (_, rowIndex, clickDrumPad, drumColorRefs) => {
 };
 
 const Drums = () => {
-  const drumColorRefs = useMemo(() => Array(9).fill(React.createRef(), []));
   const [drumSoundName, setDrumSoundName] = useState(false);
   function handleKeyPress(e) {
-    if (e.key === "q") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
-      ).play();
-      console.log(drumColorRefs[0]);
-      setDrumSoundName("Heater-1");
-      drumColorRefs[0].current.style.background = "red";
-    }
-    if (e.key === "w") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"
-      ).play();
-      console.log("Heater-2");
-      setDrumSoundName("Heater-2");
-      drumColorRefs[1].current.style.background = "green";
-    }
-    if (e.key === "e") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"
-      ).play();
-      console.log("Heater-3");
-      setDrumSoundName("Heater-3");
-    }
-    if (e.key === "a") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"
-      ).play();
-      console.log("Heater-4");
-      setDrumSoundName("Heater-4");
-    }
-    if (e.key === "s") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"
-      ).play();
-      console.log("Heater-6");
-      setDrumSoundName("Heater-6");
-    }
-    if (e.key === "d") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"
-      ).play();
-      console.log("Dsc-Oh");
-      setDrumSoundName("Dsc-Oh");
-    }
-    if (e.key === "z") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
-      ).play();
-      console.log("Kick-n-Hat");
-      setDrumSoundName("Kick-n-Hat");
-    }
-    if (e.key === "x") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"
-      ).play();
-      console.log("Kick-1");
-      setDrumSoundName("Kick-1");
-    }
-    if (e.key === "c") {
-      new Audio(
-        "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
-      ).play();
-      console.log("Cev-H2");
-      setDrumSoundName("Cev-H2");
+    switch (true) {
+      case e.key === "q":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
+        ).play();
+        setDrumSoundName("Heater-1");
+        break;
+      case e.key === "w":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"
+        ).play();
+        console.log("Heater-2");
+        setDrumSoundName("Heater-2");
+        break;
+      case e.key === "e":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"
+        ).play();
+        console.log("Heater-3");
+        setDrumSoundName("Heater-3");
+        break;
+      case e.key === "a":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"
+        ).play();
+        console.log("Heater-4");
+        setDrumSoundName("Heater-4");
+        break;
+      case e.key === "s":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"
+        ).play();
+        console.log("Heater-6");
+        setDrumSoundName("Heater-6");
+        break;
+      case e.key === "d":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"
+        ).play();
+        console.log("Dsc-Oh");
+        setDrumSoundName("Dsc-Oh");
+        break;
+      case e.key === "z":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
+        ).play();
+        console.log("Kick-n-Hat");
+        setDrumSoundName("Kick-n-Hat");
+        break;
+      case e.key === "x":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"
+        ).play();
+        console.log("Kick-1");
+        setDrumSoundName("Kick-1");
+        break;
+      case e.key === "c":
+        new Audio(
+          "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
+        ).play();
+        console.log("Cev-H2");
+        setDrumSoundName("Cev-H2");
+        break;
+      default:
+        break;
     }
   }
   const clickDrumPad = async i => {
@@ -167,7 +166,7 @@ const Drums = () => {
       >
         {Array(rowsOfButtons)
           .fill(0)
-          .map((row, i) => renderDrumRow(row, i, clickDrumPad, drumColorRefs))}
+          .map((row, i) => renderDrumRow(row, i, clickDrumPad))}
       </div>
     </div>
   );
