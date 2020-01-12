@@ -3,18 +3,6 @@ import { DrumPad } from "./styled";
 
 const drumLetters = ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"];
 
-const sounds = [
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"),
-  new Audio("https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3")
-];
-
 const drumPadColors = [
   "#EFC530",
   "#30ADFF",
@@ -27,118 +15,111 @@ const drumPadColors = [
   "#BAE66C"
 ];
 
-const renderDrumRow = (_, rowIndex, clickDrumPad) => {
-  let count = 0;
-  if (rowIndex === 1) {
-    count = 3;
-  }
-  if (rowIndex === 2) {
-    count = 6;
-  }
+const renderDrumPad = (handleKeyPress, i, drumPadColor, drumLetter) => {
+  const handleClick = e => {
+    handleKeyPress(e, i);
 
+    setTimeout(() => {}, 100);
+  };
   return (
-    <div
-      key={rowIndex}
-      style={{ borderRadius: "8px", backgroundColor: "black" }}
-    >
-      {Array(3)
-        .fill(0)
-        .map(() => {
-          count++;
-          const drumLettersIndex = count - 1;
-          const clickOnDrumPad = () => clickDrumPad(drumLettersIndex);
-          return (
-            <div key={drumLettersIndex}>
-              <DrumPad
-                className="drum-pad"
-                clickColor={drumPadColors[drumLettersIndex]}
-                onClick={clickOnDrumPad}
-              >
-                {drumLetters[drumLettersIndex]}
-              </DrumPad>
-            </div>
-          );
-        })}
+    <div key={i} style={{ borderRadius: "8px", backgroundColor: "black" }}>
+      <DrumPad
+        id={i}
+        className="drum-pad"
+        clickColor={drumPadColor}
+        onClick={handleClick}
+      >
+        {drumLetter}
+      </DrumPad>
     </div>
   );
 };
-
 const Drums = () => {
   const [drumSoundName, setDrumSoundName] = useState(false);
-  function handleKeyPress(e) {
+
+  const handleDrumPad = (sound, soundName, i) => {
+    new Audio(sound).play();
+    setDrumSoundName(soundName);
+    document.getElementById(i).style.background = drumPadColors[i];
+    setTimeout(() => {
+      document.getElementById(i).style.background = "white";
+    }, 100);
+  };
+  function handleKeyPress(e, i) {
     switch (true) {
-      case e.key === "q":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
-        ).play();
-        setDrumSoundName("Heater-1");
+      case e.key === "q" || i === 0:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3",
+          "Heater-1",
+          0
+        );
+
         break;
-      case e.key === "w":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"
-        ).play();
-        console.log("Heater-2");
-        setDrumSoundName("Heater-2");
+      case e.key === "w" || i === 1:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3",
+          "Heater-2",
+          1
+        );
         break;
-      case e.key === "e":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"
-        ).play();
-        console.log("Heater-3");
-        setDrumSoundName("Heater-3");
+      case e.key === "e" || i === 2:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3",
+          "Heater-3",
+          2
+        );
         break;
-      case e.key === "a":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"
-        ).play();
-        console.log("Heater-4");
-        setDrumSoundName("Heater-4");
+      case e.key === "a" || i === 3:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3",
+          "Heater-4",
+          3
+        );
         break;
-      case e.key === "s":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"
-        ).play();
-        console.log("Heater-6");
-        setDrumSoundName("Heater-6");
+      case e.key === "s" || i === 4:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3",
+          "Heater-6",
+          4
+        );
         break;
-      case e.key === "d":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"
-        ).play();
-        console.log("Dsc-Oh");
-        setDrumSoundName("Dsc-Oh");
+      case e.key === "d" || i === 5:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3",
+          "Dsc-Oh",
+          5
+        );
         break;
-      case e.key === "z":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
-        ).play();
-        console.log("Kick-n-Hat");
-        setDrumSoundName("Kick-n-Hat");
+      case e.key === "z" || i === 6:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3",
+          "Kick-n-Hat",
+          6
+        );
         break;
-      case e.key === "x":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"
-        ).play();
-        console.log("Kick-1");
-        setDrumSoundName("Kick-1");
+      case e.key === "x" || i === 7:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3",
+          "Kick-1",
+          7
+        );
         break;
-      case e.key === "c":
-        new Audio(
-          "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
-        ).play();
-        console.log("Cev-H2");
-        setDrumSoundName("Cev-H2");
+      case e.key === "c" || i === 8:
+        handleDrumPad(
+          "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3",
+          "Cev-H2",
+          8
+        );
         break;
       default:
         break;
     }
   }
-  const clickDrumPad = async i => {
-    return await sounds[i].play();
-  };
-  const rowsOfButtons = 3;
+  const handleClick = e => handleKeyPress(e);
+  const drumPads = 9;
   return (
     <div
+      onClick={handleClick}
       onKeyPress={handleKeyPress}
       id="drum-machine"
       tabIndex={0}
@@ -158,15 +139,17 @@ const Drums = () => {
       <div
         id="display"
         style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center"
+          display: "grid",
+          gridTemplateRows: "repeat(3, 100px)",
+          gridTemplateColumns: "repeat(3, 100px)",
+          gridGap: "10px"
         }}
       >
-        {Array(rowsOfButtons)
+        {Array(drumPads)
           .fill(0)
-          .map((row, i) => renderDrumRow(row, i, clickDrumPad))}
+          .map((_, i) =>
+            renderDrumPad(handleKeyPress, i, drumPadColors[i], drumLetters[i])
+          )}
       </div>
     </div>
   );
