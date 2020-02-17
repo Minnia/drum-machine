@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { DrumPad, DrumPadDiv, ContainerDiv } from "./styled";
+import {
+  DrumPad,
+  DrumPadDiv,
+  DrumPadKeys,
+  DrumSoundNameSpan,
+  ContainerDiv
+} from "./styled";
 
 const drumLetters = ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"];
 
@@ -114,32 +120,20 @@ const Drums = () => {
   const drumPads = 9;
   return (
     <ContainerDiv>
+      {drumSoundName && <DrumSoundNameSpan>{drumSoundName}</DrumSoundNameSpan>}
+
       <DrumPadDiv
         onClick={handleClick}
         onKeyPress={handleKeyPress}
         tabIndex={0}
       >
-        <span>
-          {drumSoundName && (
-            <span style={{ backgroundColor: "white" }}>{drumSoundName}</span>
-          )}
-        </span>
-
-        <div
-          id="display"
-          style={{
-            display: "grid",
-            gridTemplateRows: "repeat(3, 100px)",
-            gridTemplateColumns: "repeat(3, 100px)",
-            gridGap: "10px"
-          }}
-        >
+        <DrumPadKeys>
           {Array(drumPads)
             .fill(0)
             .map((_, i) =>
               renderDrumPad(handleKeyPress, i, drumPadColors[i], drumLetters[i])
             )}
-        </div>
+        </DrumPadKeys>
       </DrumPadDiv>
     </ContainerDiv>
   );

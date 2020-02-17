@@ -6,6 +6,7 @@ export const DrumPadDiv = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  outline: none;
 `;
 
 export const DrumPad = styled.div`
@@ -26,9 +27,24 @@ export const DrumPad = styled.div`
   }
 `;
 
+export const DrumPadKeys = styled.div`
+  display: grid;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 10px;
+`;
+
 export const ContainerDiv = styled.div`
   width: 100vw;
   height: 100vh;
   padding: 100px;
   background-color: black;
+`;
+
+export const DrumSoundNameSpan = styled.span`
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `;
