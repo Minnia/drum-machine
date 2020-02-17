@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DrumPad } from "./styled";
+import { DrumPad, DrumPadDiv, ContainerDiv } from "./styled";
 
 const drumLetters = ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"];
 
@@ -22,13 +22,8 @@ const renderDrumPad = (handleKeyPress, i, drumPadColor, drumLetter) => {
     setTimeout(() => {}, 100);
   };
   return (
-    <div key={i} style={{ borderRadius: "8px", backgroundColor: "black" }}>
-      <DrumPad
-        id={i}
-        className="drum-pad"
-        clickColor={drumPadColor}
-        onClick={handleClick}
-      >
+    <div key={i}>
+      <DrumPad id={i} clickColor={drumPadColor} onClick={handleClick}>
         {drumLetter}
       </DrumPad>
     </div>
@@ -118,40 +113,35 @@ const Drums = () => {
   const handleClick = e => handleKeyPress(e);
   const drumPads = 9;
   return (
-    <div
-      onClick={handleClick}
-      onKeyPress={handleKeyPress}
-      id="drum-machine"
-      tabIndex={0}
-      style={{
-        margin: "100px",
-        border: "1px solid black",
-        padding: "100px",
-        backgroundColor: "black"
-      }}
-    >
-      <span>
-        {drumSoundName && (
-          <span style={{ backgroundColor: "white" }}>{drumSoundName}</span>
-        )}
-      </span>
-
-      <div
-        id="display"
-        style={{
-          display: "grid",
-          gridTemplateRows: "repeat(3, 100px)",
-          gridTemplateColumns: "repeat(3, 100px)",
-          gridGap: "10px"
-        }}
+    <ContainerDiv>
+      <DrumPadDiv
+        onClick={handleClick}
+        onKeyPress={handleKeyPress}
+        tabIndex={0}
       >
-        {Array(drumPads)
-          .fill(0)
-          .map((_, i) =>
-            renderDrumPad(handleKeyPress, i, drumPadColors[i], drumLetters[i])
+        <span>
+          {drumSoundName && (
+            <span style={{ backgroundColor: "white" }}>{drumSoundName}</span>
           )}
-      </div>
-    </div>
+        </span>
+
+        <div
+          id="display"
+          style={{
+            display: "grid",
+            gridTemplateRows: "repeat(3, 100px)",
+            gridTemplateColumns: "repeat(3, 100px)",
+            gridGap: "10px"
+          }}
+        >
+          {Array(drumPads)
+            .fill(0)
+            .map((_, i) =>
+              renderDrumPad(handleKeyPress, i, drumPadColors[i], drumLetters[i])
+            )}
+        </div>
+      </DrumPadDiv>
+    </ContainerDiv>
   );
 };
 
